@@ -9,8 +9,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var row: String = "10"
+    @State private var col: String = "10"
+    
+    
     var body: some View {
-        Text("Hello, World!")
+        Form {
+            Section(header: Text("Choose scale")) {
+                TextField("Rows", text: $row)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
+                TextField("Cols", text: $col)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
+            }
+            Text("Table: \(row) x \(col)")
+        }
     }
 }
 
