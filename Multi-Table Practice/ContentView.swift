@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var row: String = "10"
     @State private var col: String = "10"
     @State private var questionsCount = 5
-    
+    var questions = [Question]()
     
     var body: some View {
         Form {
@@ -24,6 +24,7 @@ struct ContentView: View {
             }
             
             Section(header: Text("Chosen table")) {
+                // A little attention on plural detail
                 Text("\(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "Rows" : "Row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "Columns" : "Column")")
             }
             
@@ -41,6 +42,10 @@ struct ContentView: View {
                 Text("Let's go!")
             }
         }
+    }
+    
+    func generateQuestions() {
+        
     }
 }
 
