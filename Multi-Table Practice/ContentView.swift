@@ -12,11 +12,11 @@ struct ContentView: View {
     @State private var row: String = "10"
     @State private var col: String = "10"
     @State private var questionsCount = 5
-    var questions = [Question]()
+    @State private var questions = [Question]()
     
     var body: some View {
         Form {
-            Section(header: Text("Choose scale")) {
+            Section(header: Text("Choose table scale")) {
                 TextField("Rows", text: $row)
                     .keyboardType(.numberPad)
                 TextField("Cols", text: $col)
@@ -38,6 +38,10 @@ struct ContentView: View {
                 // Dismiss keyboard
                 self.hideKeyboard()
                 
+                self.generateQuestions()
+                
+                print("xxx")
+                
             }) {
                 Text("Let's go!")
             }
@@ -45,7 +49,16 @@ struct ContentView: View {
     }
     
     func generateQuestions() {
-        
+        var counter = 0
+        for i in 1 ... (Int(row) ?? 1) {
+            for j in 1 ... (Int(col) ?? 1) {
+                if ( counter < questionsCount) {
+                    questions.append(Question(questionText: "\(i) x \(j)", answer: i * j))
+                    print(questions[counter])
+                    counter += 1
+                }
+            }
+        }
     }
 }
 
