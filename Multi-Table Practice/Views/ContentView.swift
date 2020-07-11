@@ -19,59 +19,67 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if (self.settings.showingSettings) {
-                VStack {
-                    NavigationView {
-                        VStack {
-                            Form {
-                                // A little attention on plural detail
-                                Section(header: Text(tableHintString())) {
-                                    TextField("Rows", text: $row)
-                                        .keyboardType(.numberPad)
-                                    TextField("Cols", text: $col)
-                                        .keyboardType(.numberPad)
-                                }
-                                
-                                Section(header: Text("How many questions do you want?")) {
-                                    Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
-                                        Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
-                                    }
-                                }
-                                
-                                Section(header: Text("If all is set")) {
-                                    
-                                    Button(action: {
-                                        // Dismiss keyboard
-                                        self.hideKeyboard()
-                                        
-                                        // Generate all the questions
-                                        self.generateQuestions()
-                                        
-                                        
-                                        self.settings.showingSettings = false
-                                        
-                                    }) {
-                                        HStack {
-                                            Text("Let's GAME!")
-                                                .frame(alignment: Alignment.leading)
-                                            Spacer()
-                                            Text("->")
-                                                .frame(alignment: Alignment.trailing)
-                                        }
-                                    }
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color.blue)
-                                    .cornerRadius(8)
-                                    .shadow(color: Color.blue, radius: 20, y: 5)
-                                }
+            if (self.settings.showingSettings) { // Game Settings Scene, which is also the default one.
+                NavigationView {
+                    VStack {
+                        // A little attention on plural detail
+                        VStack  {
+                            Text(tableHintString())
+                            
+                            TextField("Rows", text: $row)
+                                .keyboardType(.numberPad)
+                            TextField("Cols", text: $col)
+                                .keyboardType(.numberPad)
+                        }
+                        
+                        VStack  {
+                            Text("How many questions do you want?")
+                            
+                            Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
+                                Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
                             }
                         }
-                        .navigationBarTitle("Settings")
+                        
+                        HStack {
+                            Spacer()
+                                .frame(width: 18)
+                            
+                            Button(action: {
+                                // Dismiss keyboard
+                                self.hideKeyboard()
+                                
+                                // Generate all the questions
+                                self.generateQuestions()
+                                
+                                self.settings.showingSettings = false
+                                
+                            }) {
+                                HStack {
+                                    Text("Let's GAME!")
+                                        .frame(alignment: Alignment.leading)
+                                    Spacer()
+                                    Text("->")
+                                        .frame(alignment: Alignment.trailing)
+                                }
+                            }
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                            .shadow(color: Color.blue, radius: 20, y: 5)
+                            
+                            Spacer()
+                                .frame(width: 18)
+                        }
+                        
+                        Spacer()
                     }
+                    .navigationBarTitle("Settings", displayMode: .inline)
+                    .background(LinearGradient(gradient: Gradient(colors: [.white, .red]), startPoint: .top, endPoint: .bottom))
                 }
+                .edgesIgnoringSafeArea(.bottom)
                 
-            } else {
+            } else { // GameView Scene
                 GameView(questions: chosenQuestions, questionsCount: questionsCount)
                 
             }
