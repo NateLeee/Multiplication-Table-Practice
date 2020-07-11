@@ -9,57 +9,56 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var settings: UserSettings
+    
     @State private var row: String = "9"
     @State private var col: String = "9"
     @State private var questionsCount = 5
     @State private var allGeneratedQuestions = [Question]()
-    @State private var gotoGameView = false
-    
     @State private var chosenQuestions = [Question]()
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Form {
-                    // A little attention on plural detail
-                    Section(header: Text("Choose table scale, now \(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "rows" : "row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "columns" : "column") chosen")) {
-                        TextField("Rows", text: $row)
-                            .keyboardType(.numberPad)
-                        TextField("Cols", text: $col)
-                            .keyboardType(.numberPad)
-                    }
-                    
-                    Section(header: Text("How many questions do you want?")) {
-                        Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
-                            Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
+        Group {
+            if (self.settings.showingSettings) {
+                VStack {
+                    Form {
+                        // A little attention on plural detail
+                        Section(header: Text("Choose table scale, now \(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "rows" : "row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "columns" : "column") chosen")) {
+                            TextField("Rows", text: $row)
+                                .keyboardType(.numberPad)
+                            TextField("Cols", text: $col)
+                                .keyboardType(.numberPad)
                         }
-                    }
-                    
-                    Button(action: {
-                        // Dismiss keyboard
-                        self.hideKeyboard()
                         
-                        // Generate all the questions
-                        self.generateQuestions()
+                        Section(header: Text("How many questions do you want?")) {
+                            Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
+                                Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
+                            }
+                        }
                         
-                        print("xxx")
-                        self.gotoGameView = true
-                        
-                    }) {
-                        Text("Let's GAME!")
+                        Button(action: {
+                            // Dismiss keyboard
+                            self.hideKeyboard()
+                            
+                            // Generate all the questions
+                            self.generateQuestions()
+                            
+                            
+                            self.settings.showingSettings = false
+                            
+                        }) {
+                            Text("Let's GAME!")
+                        }
                     }
                 }
                 
-                // NavigationLink now is invisible!
-                NavigationLink(
-                    destination: GameView(questions: chosenQuestions, questionsCount: questionsCount),
-                    isActive: $gotoGameView) {
-                        EmptyView()
-                }
+            } else {
+                GameView(questions: chosenQuestions, questionsCount: questionsCount)
+                
             }
-            .navigationBarTitle("Game Settings")
         }
     }
+    
     
     func generateQuestions() {
         let rowCount = Int(row) ?? 1

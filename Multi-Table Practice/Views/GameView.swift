@@ -12,7 +12,7 @@ struct GameView: View {
     var questions: [Question]
     var questionsCount: Int
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode> // some advanced solution
+    @EnvironmentObject var settings: UserSettings
     
     @State private var questionIndex = 0
     @State private var score = 0
@@ -53,12 +53,10 @@ struct GameView: View {
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showingAlert) { () -> Alert in
             Alert(title: Text("Game Over"), message: Text("You scored \(score) out of \(questionsCount)!"), dismissButton: .default(Text("Restart"), action: {
-                // DONE: - Go back to the first view
-                self.presentationMode.wrappedValue.dismiss()
+                // DONE: - Go back to the settings view
+                self.settings.showingSettings = true
             }))
         }
     }
-    
-    
 }
 
