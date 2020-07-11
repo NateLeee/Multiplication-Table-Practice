@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var col: String = "9"
     @State private var questionsCount = 5
     @State private var questions = [Question]()
-    @State private var navlinkEnabled = false
+    @State private var gotoGameView = false
     
     var body: some View {
         NavigationView {
@@ -41,7 +41,7 @@ struct ContentView: View {
                         self.generateQuestions()
                         
                         print("xxx")
-                        self.navlinkEnabled = true
+                        self.gotoGameView = true
                         
                     }) {
                         Text("Let's go!")
@@ -49,7 +49,7 @@ struct ContentView: View {
                 }
                 
                 // NavigationLink now is invisible!
-                NavigationLink(destination: GameView(), isActive: $navlinkEnabled) {
+                NavigationLink(destination: GameView(questions: questions, questionsCount: questionsCount), isActive: $gotoGameView) {
                     EmptyView()
                 }
             }
@@ -67,7 +67,7 @@ struct ContentView: View {
         for i in 1 ... rowCount {
             for j in 1 ... colCount {
                 questions.append(Question(questionText: "\(i) x \(j)", answer: i * j))
-                print(questions.last!)
+                // print(questions.last!)
                 counter += 1
             }
         }

@@ -9,13 +9,43 @@
 import SwiftUI
 
 struct GameView: View {
+    var questions: [Question]
+    var questionsCount: Int
+    
+    @State private var questionIndex = 0
+    @State private var score = 0
+    
     var body: some View {
-        Text("This is the game view!")
+        VStack {
+            Text("\(questions[questionIndex].questionText)")
+                .padding()
+            
+            ForEach(0 ..< 3) { i in
+                Button(action: {
+                    // Simple logic for now.
+                    if (i == 0) {
+                        self.score += 1
+                    }
+                    
+                    self.questionIndex += 1
+                    
+                    if (self.questionIndex >= self.questionsCount) {
+                        // Do more later
+                        print("Game over!")
+                        
+                    }
+                    
+                }) {
+                    Text("\(self.questions[self.questionIndex].answer + i)")
+                }
+                .padding()
+                
+            }
+            
+            Text("Current Score: \(score)")
+            
+            Spacer()
+        }
     }
 }
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView()
-    }
-}
