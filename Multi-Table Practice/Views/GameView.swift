@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct GameView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode> // some advanced solution
+    
     var questions: [Question]
     var questionsCount: Int
     
@@ -48,9 +50,11 @@ struct GameView: View {
             
             Spacer()
         }
+        .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showingAlert) { () -> Alert in
             Alert(title: Text("Game Over"), message: Text("You scored \(score) out of \(questionsCount)!"), dismissButton: .default(Text("Restart"), action: {
-                // TODO: - Go back to the first view
+                // DONE: - Go back to the first view
+                self.presentationMode.wrappedValue.dismiss()
             }))
         }
     }
