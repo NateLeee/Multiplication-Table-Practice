@@ -13,6 +13,7 @@
 		FA00D62224B86598005E9D81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA00D62124B86598005E9D81 /* Assets.xcassets */; };
 		FA00D62524B86598005E9D81 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA00D62424B86598005E9D81 /* Preview Assets.xcassets */; };
 		FA00D62824B86598005E9D81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA00D62624B86598005E9D81 /* LaunchScreen.storyboard */; };
+		FAAA269224B9651C00E3E79B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAA269124B9651C00E3E79B /* GameView.swift */; };
 		FAAA960024B8BDB70020FE80 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAA95FF24B8BDB70020FE80 /* Question.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		FA00D62424B86598005E9D81 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA00D62724B86598005E9D81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA00D62924B86598005E9D81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAAA269124B9651C00E3E79B /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		FAAA95FF24B8BDB70020FE80 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,7 +62,7 @@
 			children = (
 				FA00D61B24B86596005E9D81 /* AppDelegate.swift */,
 				FA00D61D24B86596005E9D81 /* SceneDelegate.swift */,
-				FA00D61F24B86596005E9D81 /* ContentView.swift */,
+				FAAA269024B964F100E3E79B /* Views */,
 				FAAA960124B8BE090020FE80 /* Model */,
 				FA00D62124B86598005E9D81 /* Assets.xcassets */,
 				FA00D62624B86598005E9D81 /* LaunchScreen.storyboard */,
@@ -76,6 +78,15 @@
 				FA00D62424B86598005E9D81 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FAAA269024B964F100E3E79B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA00D61F24B86596005E9D81 /* ContentView.swift */,
+				FAAA269124B9651C00E3E79B /* GameView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		FAAA960124B8BE090020FE80 /* Model */ = {
@@ -161,6 +172,7 @@
 				FAAA960024B8BDB70020FE80 /* Question.swift in Sources */,
 				FA00D61E24B86596005E9D81 /* SceneDelegate.swift in Sources */,
 				FA00D62024B86596005E9D81 /* ContentView.swift in Sources */,
+				FAAA269224B9651C00E3E79B /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
