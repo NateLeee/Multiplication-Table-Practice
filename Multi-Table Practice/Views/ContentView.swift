@@ -17,42 +17,44 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                // A little attention on plural detail
-                Section(header: Text("Choose table scale, now \(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "rows" : "row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "columns" : "column") chosen")) {
-                    TextField("Rows", text: $row)
-                        .keyboardType(.numberPad)
-                    TextField("Cols", text: $col)
-                        .keyboardType(.numberPad)
-                }
-                
-                Section(header: Text("How many questions do you want?")) {
-                    Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
-                        Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
+            VStack {
+                Form {
+                    // A little attention on plural detail
+                    Section(header: Text("Choose table scale, now \(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "rows" : "row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "columns" : "column") chosen")) {
+                        TextField("Rows", text: $row)
+                            .keyboardType(.numberPad)
+                        TextField("Cols", text: $col)
+                            .keyboardType(.numberPad)
+                    }
+                    
+                    Section(header: Text("How many questions do you want?")) {
+                        Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
+                            Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
+                        }
+                    }
+                    
+                    Button(action: {
+                        // Dismiss keyboard
+                        self.hideKeyboard()
+                        
+                        // Generate all the questions
+                        self.generateQuestions()
+                        
+                        print("xxx")
+                        self.navlinkEnabled = true
+                        
+                    }) {
+                        Text("Let's go!")
                     }
                 }
                 
-                Button(action: {
-                    // Dismiss keyboard
-                    self.hideKeyboard()
-                    
-                    // Generate all the questions
-                    self.generateQuestions()
-                    
-                    print("xxx")
-                    self.navlinkEnabled = true
-                    
-                }) {
-                    Text("Let's go!")
-                }
-                
+                // NavigationLink now is invisible!
                 NavigationLink(destination: GameView(), isActive: $navlinkEnabled) {
                     EmptyView()
                 }
-                
-                
             }
             .navigationBarTitle("Settings")
+            
             
         }
     }
