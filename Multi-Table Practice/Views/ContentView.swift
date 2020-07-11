@@ -9,29 +9,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var row: String = "10"
-    @State private var col: String = "10"
+    @State private var row: String = "9"
+    @State private var col: String = "9"
     @State private var questionsCount = 5
     @State private var questions = [Question]()
+    @State private var navlinkEnabled = false
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Choose table scale")) {
+                // A little attention on plural detail
+                Section(header: Text("Choose table scale, now \(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "rows" : "row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "columns" : "column") chosen")) {
                     TextField("Rows", text: $row)
                         .keyboardType(.numberPad)
                     TextField("Cols", text: $col)
                         .keyboardType(.numberPad)
                 }
                 
-                Section(header: Text("Chosen table")) {
-                    // A little attention on plural detail
-                    Text("\(row == "" ? "0" : row) \(Int(row) ?? 0 > 1 ? "Rows" : "Row") x \(col == "" ? "0" : col) \(Int(col) ?? 0 > 1 ? "Columns" : "Column")")
-                }
-                
                 Section(header: Text("How many questions do you want?")) {
-                    Stepper(value: $questionsCount, in: 5 ... 20, step: 5) {
-                        Text("\(questionsCount)")
+                    Stepper(value: $questionsCount, in: 5 ... 25, step: 5) {
+                        Text("\(questionsCount > 20 ? "All" : String(questionsCount))")
                     }
                 }
                 
@@ -43,13 +40,20 @@ struct ContentView: View {
                     self.generateQuestions()
                     
                     print("xxx")
+                    self.navlinkEnabled = true
                     
                 }) {
                     Text("Let's go!")
                 }
                 
+                NavigationLink(destination: GameView(), isActive: $navlinkEnabled) {
+                    EmptyView()
+                }
+                
+                
             }
             .navigationBarTitle("Settings")
+            
         }
     }
     
