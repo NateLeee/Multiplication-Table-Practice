@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct GameView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode> // some advanced solution
-    
     var questions: [Question]
     var questionsCount: Int
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode> // some advanced solution
     
     @State private var questionIndex = 0
     @State private var score = 0
@@ -28,19 +28,19 @@ struct GameView: View {
             ForEach(0 ..< 3) { i in
                 Button(action: {
                     // Simple logic for now. Maybe extract to a func later.
-                    if (i == 0) {
+                    if (self.questions[self.questionIndex].answer == self.questions[self.questionIndex].possibleOptions[i]) {
                         self.score += 1
                     }
                     
                     self.questionIndex += 1
                     
                     if (self.questionIndex >= self.questionsCount) {
-                        self.questionIndex = 0 // reset index.
+                        self.questionIndex -= 1 // one step back just so it stays where it was.
                         self.showingAlert = true
                     }
                     
                 }) {
-                    Text("\(self.questions[self.questionIndex].answer + i)")
+                    Text("\(self.questions[self.questionIndex].possibleOptions[i])")
                 }
                 .padding()
                 
@@ -58,5 +58,7 @@ struct GameView: View {
             }))
         }
     }
+    
+    
 }
 

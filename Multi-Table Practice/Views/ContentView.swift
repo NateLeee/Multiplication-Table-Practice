@@ -46,7 +46,7 @@ struct ContentView: View {
                         self.gotoGameView = true
                         
                     }) {
-                        Text("Let's go!")
+                        Text("Let's GAME!")
                     }
                 }
                 
@@ -57,7 +57,7 @@ struct ContentView: View {
                         EmptyView()
                 }
             }
-            .navigationBarTitle("Settings")
+            .navigationBarTitle("Game Settings")
         }
     }
     
@@ -67,7 +67,12 @@ struct ContentView: View {
         
         for i in 1 ... rowCount {
             for j in 1 ... colCount {
-                allGeneratedQuestions.append(Question(questionText: "\(i) x \(j)", answer: i * j))
+                allGeneratedQuestions.append(
+                    Question(
+                        questionText: "\(i) x \(j)",
+                        answer: i * j,
+                        possibleOptions: [i * j, (i - 1) * (j + 1), (i + 1) * (j - 1)].shuffled()
+                ))
             }
         }
         

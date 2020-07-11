@@ -11,4 +11,5 @@ import Foundation
 struct Question {
     var questionText: String
     var answer: Int
+    var possibleOptions: [Int]
 }
