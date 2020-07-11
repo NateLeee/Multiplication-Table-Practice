@@ -12,8 +12,10 @@ struct ContentView: View {
     @State private var row: String = "9"
     @State private var col: String = "9"
     @State private var questionsCount = 5
-    @State private var questions = [Question]()
+    @State private var allGeneratedQuestions = [Question]()
     @State private var gotoGameView = false
+    
+    @State private var chosenQuestions = [Question]()
     
     var body: some View {
         NavigationView {
@@ -49,28 +51,39 @@ struct ContentView: View {
                 }
                 
                 // NavigationLink now is invisible!
-                NavigationLink(destination: GameView(questions: questions, questionsCount: questionsCount), isActive: $gotoGameView) {
-                    EmptyView()
+                NavigationLink(
+                    destination: GameView(questions: chosenQuestions, questionsCount: questionsCount),
+                    isActive: $gotoGameView) {
+                        EmptyView()
                 }
             }
             .navigationBarTitle("Settings")
-            
             
         }
     }
     
     func generateQuestions() {
-        var counter = 0
         let rowCount = Int(row) ?? 1
         let colCount = Int(col) ?? 1
         
         for i in 1 ... rowCount {
             for j in 1 ... colCount {
-                questions.append(Question(questionText: "\(i) x \(j)", answer: i * j))
-                // print(questions.last!)
-                counter += 1
+                allGeneratedQuestions.append(Question(questionText: "\(i) x \(j)", answer: i * j))
             }
         }
+        
+        // Pick out random questions
+        let shuffledQuestions = allGeneratedQuestions.shuffled()
+        
+        if questionsCount > 20 {
+            chosenQuestions = shuffledQuestions
+            questionsCount = rowCount * colCount // Otherwise, it would be 25!
+        } else {
+            for i in 0 ..< questionsCount {
+                chosenQuestions.append(shuffledQuestions[i])
+            }
+        }
+        
     }
 }
 

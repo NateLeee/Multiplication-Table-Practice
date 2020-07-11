@@ -14,15 +14,18 @@ struct GameView: View {
     
     @State private var questionIndex = 0
     @State private var score = 0
+    @State private var showingAlert = false
     
     var body: some View {
-        VStack {
+        // print(questions)
+        
+        return VStack {
             Text("\(questions[questionIndex].questionText)")
                 .padding()
             
             ForEach(0 ..< 3) { i in
                 Button(action: {
-                    // Simple logic for now.
+                    // Simple logic for now. Maybe extract to a func later.
                     if (i == 0) {
                         self.score += 1
                     }
@@ -30,9 +33,8 @@ struct GameView: View {
                     self.questionIndex += 1
                     
                     if (self.questionIndex >= self.questionsCount) {
-                        // Do more later
-                        print("Game over!")
-                        
+                        self.questionIndex = 0 // reset index.
+                        self.showingAlert = true
                     }
                     
                 }) {
@@ -45,6 +47,11 @@ struct GameView: View {
             Text("Current Score: \(score)")
             
             Spacer()
+        }
+        .alert(isPresented: $showingAlert) { () -> Alert in
+            Alert(title: Text("Game Over"), message: Text("You scored \(score) out of \(questionsCount)!"), dismissButton: .default(Text("Restart"), action: {
+                // TODO: - Go back to the first view
+            }))
         }
     }
 }
